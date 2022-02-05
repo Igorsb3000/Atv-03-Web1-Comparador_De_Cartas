@@ -1,0 +1,28 @@
+@charset "UTF-8";
+
+/*
+*   Author: Igor Silva Bento
+*/
+
+body{
+    text-align: center;
+    background-color: whitesmoke;
+}
+#chart_div{
+    margin-left: auto;
+    margin-right: auto;
+}
+#botoes_topo{
+    margin-left: auto;
+    margin-right: auto;
+}
+#titulo{
+    margin-left: auto;
+    margin-right: auto;
+}
+#select_1{
+    background-color: whitesmoke;
+}
+#select_2{
+    background-color: whitesmoke;
+}
