@@ -1,3 +1,8 @@
+/*
+*   Author: Igor Silva Bento
+*/
+
+
 function xhttpAssincrono(callBackFunction, type, value) {
     var xhttp = new XMLHttpRequest();;
     xhttp.onreadystatechange = function () {
@@ -50,41 +55,93 @@ function montar_select(response){
 } 
 
 function exibir_carta_1(id_selecionado){
-    document.getElementById("imagem_carta_1").src = objeto_carta.data[id_selecionado-1].card_images[0].image_url;
+    //document.getElementById("imagem_carta_1").src = objeto_carta.data[id_selecionado-1].card_images[0].image_url;
+    fechar_board_1();
+    var imagem = document.createElement("img");
+    imagem.setAttribute('src', objeto_carta.data[id_selecionado-1].card_images[0].image_url);
+    imagem.width = 250;
+    imagem.height = 350;
+    document.getElementById("imagem_carta_1").appendChild(imagem);
+    exibir_botao_desfavoritar(objeto_carta.data[id_selecionado-1].id, 1);
 }
 
-function deletar_favorito(id_selecionado){
-    console.log("deletar: " + id_selecionado);
-    for(i=0; i<quantidade_cartas; i++){
-        if(objeto_carta.data[i].id == objeto_carta.data[id_selecionado-1].id){
-            localStorage.removeItem(objeto_carta.data[i].id);
+function exibir_carta_2(id_selecionado){
+    //document.getElementById("imagem_carta_2").src = objeto_carta.data[id_selecionado-1].card_images[0].image_url;
+    fechar_board_2();
+    var imagem = document.createElement("img");
+    imagem.setAttribute('src', objeto_carta.data[id_selecionado-1].card_images[0].image_url);
+    imagem.width = 250;
+    imagem.height = 350;
+    document.getElementById("imagem_carta_2").appendChild(imagem);
+    exibir_botao_desfavoritar(objeto_carta.data[id_selecionado-1].id, 2);
+}
+
+
+function exibir_botao_desfavoritar(id_selecionado, select){
+
+    for(i=0; i<localStorage.length; i++){
+        var id_carta = localStorage.getItem(localStorage.key(i));
+        var objeto = JSON.parse(id_carta);
+        if(objeto.id == id_selecionado){
+            if(select == 1)
+                document.getElementById("botao_1_desfavoritar").disabled = false;
+            else if(select == 2)
+                document.getElementById("botao_2_desfavoritar").disabled = false;
         }
     }
 }
 
-function exibir_carta_2(id_selecionado){
-    document.getElementById("imagem_carta_2").src = objeto_carta.data[id_selecionado-1].card_images[0].image_url;
+function deletar_favorito(id_selecionado, select){
+    console.log("deletar: " + id_selecionado);
+    for(i=0; i<quantidade_cartas; i++){
+        if(objeto_carta.data[i].id == objeto_carta.data[id_selecionado-1].id){
+            localStorage.removeItem(objeto_carta.data[i].id);
+            if(select == 1)
+                document.getElementById("botao_1_desfavoritar").disabled = true;
+            else if(select == 2)
+                document.getElementById("botao_2_desfavoritar").disabled = true;
+        }
+    }
 }
 
-function armazenar_favorito(id_selecionado){
+
+
+function armazenar_favorito(id_selecionado, select){
     localStorage.setItem(objeto_carta.data[id_selecionado-1].id, JSON.stringify(objeto_carta.data[id_selecionado-1] ));
+    if(select == 1)
+        document.getElementById("botao_1_desfavoritar").disabled = false;
+    else if(select == 2)
+        document.getElementById("botao_2_desfavoritar").disabled = false;
 }
 
 function exibir_favoritos(){
     //Limpando a tela enquanto tiver cartas sendo exibidas no Favoritos
     fechar_favoritos();
-    document.getElementById("favoritos").removeChild
     for(i=0; i<localStorage.length; i++){
         var id_carta = localStorage.getItem(localStorage.key(i));
         var objeto = JSON.parse(id_carta);
         try{
             var imagem = document.createElement("img");
             imagem.setAttribute('src', objeto.card_images[0].image_url);
+            imagem.width = 250;
+            imagem.height = 350;
             document.getElementById("favoritos").appendChild(imagem);
         }catch(e){
             console.log(e);
         }
     }
+}
+function fechar_board_1(){
+    let Node = document.getElementById("imagem_carta_1");
+    while(Node.firstChild){
+        Node.removeChild(Node.lastChild);
+    } 
+}
+function fechar_board_2(){
+    let Node = document.getElementById("imagem_carta_2");
+    while(Node.firstChild){
+        Node.removeChild(Node.lastChild);
+    } 
 }
 
 function fechar_favoritos(){
@@ -118,8 +175,8 @@ function drawVisualization(id_selecionado_1, id_selecionado_2) {
 
       var options = {
         title : 'Comparação das Cartas por Nível de Poder',
-        vAxis: {title: 'ATK e DEF'},
-        hAxis: {title: 'Cartas'},
+        vAxis: {title: 'Pontuação'},
+        hAxis: {title: 'Nomes das Cartas'},
         seriesType: 'bars',
         series: {2: {type: 'line'}}
       };

@@ -12,13 +12,14 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script type="text/javascript" src="/js/ComparadorDeCartas.js"></script>
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    
 </head>
 
 <body>
 
     <div class="container-fluid">
         <div class="row">
-            <div class="col-1 col-lg-12">
+            <div class="col-12 col-lg-12">
                 <h1 id="titulo"> Comparador de Cartas Yu-Gi-Oh! </h1>
             </div>
         </div>
@@ -30,7 +31,7 @@
                 <div id="favoritos"> </div>
             </div>
         </div>
-
+        <br>
         <div class="row">
           <div class="col-12 col-lg-6">
             <form name="menu_1">
@@ -39,26 +40,26 @@
                         Selecione uma carta</option>
                 </select>
             </form>
-            <img id="imagem_carta_1">
-            <button id="botao_1_favorito" onclick="armazenar_favorito(id_selecionado_1)"> Favoritar </button>
-            <button id="botao_1_desfavoritar" onclick="deletar_favorito(id_selecionado_1)"> Desfavoritar </button>
-
-          </div>
-          <div class="col-12 col-lg-6">
+            <div id="imagem_carta_1" data-aos="fade-right" ></div>
+            <button id="botao_1_favorito" onclick="armazenar_favorito(id_selecionado_1, 1)"> Favoritar </button>
+            <button id="botao_1_desfavoritar" disabled="true" onclick="deletar_favorito(id_selecionado_1, 1)"> Desfavoritar </button>
+        </div>
+        <div class="col-12 col-lg-6">
             <form name="menu_2">
                 <select name="carta_2" id="select_2"> 
                     <option value="-1" disabled="true" selected="true">
                         Selecione uma carta</option>
                 </select>
             </form>
-            <img id="imagem_carta_2">
-            <button id="botao_2_favorito" onclick="armazenar_favorito(id_selecionado_2)"> Favoritar </button>
-            <button id="botao_2_desfavoritar" onclick="deletar_favorito(id_selecionado_2)"> Desfavoritar </button>
-          </div>
+            <div id="imagem_carta_2"></div>
+            <button id="botao_2_favorito" onclick="armazenar_favorito(id_selecionado_2, 2)"> Favoritar </button>
+            <button id="botao_2_desfavoritar" disabled="true" onclick="deletar_favorito(id_selecionado_2, 2)"> Desfavoritar </button>
+        </div>
 
         </div>
+        <br>
         <div class="row">
-            <div class="col-6 col-lg-12">
+            <div class="col-12 col-lg-12">
                 <h2 id="titulo" style="text-align: center;"> Gráfico </h2>
             </div>
             <div id="chart_div" style="width: 600px; height: 500px;">
@@ -80,18 +81,18 @@
 
         document.getElementById('select_1').addEventListener("change", function(){
             id_selecionado_1 = document.getElementById("select_1").options.selectedIndex;
-            console.log("ID selecionado = " + id_selecionado_1);
+            //console.log("ID selecionado = " + id_selecionado_1);
             exibir_carta_1(id_selecionado_1);
-            if(id_selecionado_2!=null)
+            if(id_selecionado_2 != null)
                 drawVisualization(id_selecionado_1, id_selecionado_2);
 
             
         })
         document.getElementById('select_2').addEventListener("change", function(){
             id_selecionado_2 = document.getElementById("select_2").options.selectedIndex;
-            console.log("ID selecionado = " + id_selecionado_2);
+            //console.log("ID selecionado = " + id_selecionado_2);
             exibir_carta_2(id_selecionado_2);
-            if(id_selecionado_1!=null)
+            if(id_selecionado_1 != null)
                 drawVisualization(id_selecionado_1, id_selecionado_2);
         })
 
