@@ -7,22 +7,32 @@
 body{
     text-align: center;
     background-color: whitesmoke;
+    background-image: url(/assets/yu-gi-oh.jpg);
 }
+
 #chart_div{
     margin-left: auto;
     margin-right: auto;
 }
+
 #botoes_topo{
     margin-left: auto;
     margin-right: auto;
 }
-#titulo{
-    margin-left: auto;
-    margin-right: auto;
-}
+
 #select_1{
     background-color: whitesmoke;
 }
+
 #select_2{
     background-color: whitesmoke;
+}
+
+#descricao_1{
+    text-decoration-color: white;
+    text-align: center;
+}
+
+#descricao_2{
+    text-align: center;
 }
